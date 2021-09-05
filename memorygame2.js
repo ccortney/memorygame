@@ -8,7 +8,7 @@ const gameContainer = document.getElementById("game");
 const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 let scoreCount = document.querySelector("#score-value");
-let highScore = document.querySelector("#high-score-value");
+// let highScore = document.querySelector("#high-score-value");
 
 const COLORS = [
   "red",
@@ -77,6 +77,7 @@ scoreCount.innerHTML = score;
 let count = 0;
 let targetOne = '';
 let targetTwo = '';
+let matchCount = 0;
 
 function handleCardClick(event) {
   // count will increase to ensure user only clicks 2 cards per turn
@@ -110,6 +111,7 @@ function handleCardClick(event) {
         // check to see if the two backgrounds are a match
         if (classOneColor==classTwoColor) {
           match = true; 
+          matchCount++;
           count = 0; 
         }
         // turn both cards back to white and reset the 2-card click count to 0
@@ -120,7 +122,11 @@ function handleCardClick(event) {
             targetTwo.classList.add('hidden');
             count = 0;
           }, 1000);
-        }}
+        }
+      if (matchCount === 5) {
+        var highScore = score;
+        localStorage.setItem('High Score', highScore);
+      }}
     }
 }
 
@@ -130,7 +136,6 @@ startButton.addEventListener('click', function() {
   // this stops the user from creating multiple gameboards at once
   startButton.remove();
   }
-// }
 )
 
 // removes gameboard, reshuffles, creates new gameboard
@@ -145,4 +150,9 @@ resetButton.addEventListener('click', function() {
 
 // remembers high score
 // not currently working
-// localStorage.setItem = ("High Score", score);
+// localStorage.setItem = ('High Score', JSON.stringify(score));
+
+// For starting with a start game button then switching to reset butotn
+//   var reset = document.createElement('button');
+// reset.innerText = 'Reset Game';
+  
